@@ -1,23 +1,28 @@
 # Size 19 * 19
 # 玩家跟电脑下棋，率先下满5个成线的，则赢
 import random
+
 WIDTH = 19
 HEIGHT = 19
-#1.谁先走
-#2.选择棋子
-#3.打印游戏版
-#4.第二种打印游戏版的显示
-#5.新得空白游戏版
-#6.给电脑做AI模拟用的游戏版
-#7.判定坐标是否超出了游戏版宽度
-#8.游戏第一层的判定  xxx
-#9.游戏第一层的判定  x x
+
+
+# 1.谁先走
+# 2.选择棋子
+# 3.打印游戏版
+# 4.第二种打印游戏版的显示
+# 5.新得空白游戏版
+# 6.给电脑做AI模拟用的游戏版
+# 7.判定坐标是否超出了游戏版宽度
+# 8.游戏第一层的判定  xxx
+# 9.游戏第一层的判定  x x
 #
 def whoGhostFirst():
     if random.randint(0, 1) == 0:
         return 'computer'
     else:
         return 'play'
+
+
 def enterXY():
     tile = ''
     while not (tile == 'X' or tile == 'O'):
@@ -28,6 +33,8 @@ def enterXY():
         return ['X', 'O']
     else:
         return ['O', 'X']
+
+
 def drawBoard(board):
     print(' +----------------------------------+')
     for y in range(HEIGHT):
@@ -40,6 +47,8 @@ def drawBoard(board):
         print('%s' % (y + 1))
 
     print(' +----------------------------------+')
+
+
 def print_board():
     # 打印列号
     print('  ', end='')
@@ -55,6 +64,8 @@ def print_board():
         for j in range(1, 16):
             print('x', end='')
         print()
+
+
 def getplaymove(board, playTile):
     # 先判定输入的X，y宽度是否符合
     Dis = ('1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19').split()
@@ -63,32 +74,41 @@ def getplaymove(board, playTile):
         if move == 'quit' or move == 'hints':
             return move
 
-        #两个判定
+        # 两个判定
         if len(move) == 2 and move[0] in Dis and move[1] in Dis:
             x = int(move[0]) - 1
             y = int(move[1]) - 1
             break
     return [x, y]
-def markmove(board,tile,xstart,ystart):
+
+
+def markmove(board, tile, xstart, ystart):
     if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):
         return False
     board[xstart][ystart] = tile
     return True
 
+
 def newBoard():
     board = []
 
     for i in range(HEIGHT):
-        board.append([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ',' '])
+        board.append([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
     return board
+
+
 def getCopyBoard(board):
     BOARD = newBoard()
     for i in range(WIDTH):
         for j in range(HEIGHT):
             BOARD[i][j] = board[i][j]
     return BOARD
+
+
 def isOnBoard(x, y):
     return (x <= WIDTH - 1 and x >= 0) and (y <= HEIGHT - 1 and y >= 0)
+
+
 def oneIF(board, tile, xstart, ystart):
     if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):
         return False
@@ -120,10 +140,9 @@ def oneIF(board, tile, xstart, ystart):
                 if Score == 2 and board[x][y] == ' ':
                     return True
 
-
-
-
     return False
+
+
 def OneIf2(board, tile, xstart, ystart):
     if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):
         return False
@@ -141,12 +160,10 @@ def OneIf2(board, tile, xstart, ystart):
                     x += xdir
                     y += ydir
                     if isOnBoard(x, y) and board[x][y] == ' ':
-
                         break
                     if isOnBoard(x, y) and board[x][y] == tile:
                         tileNumber += 1
                         if isOnBoard(x + xdir, y + ydir) and tileNumber == 2 and board[x + xdir][y + ydir] == ' ':
-
                             return True
             if isOnBoard(x, y) and board[x][y] == tile:
                 x += xdir
@@ -157,19 +174,8 @@ def OneIf2(board, tile, xstart, ystart):
                     if isOnBoard(x, y) and board[x][y] == tile:
                         if isOnBoard(x + xdir, y + ydir) and board[x + xdir][y + ydir] == ' ':
                             return True
-def WINWIN(board, tile, xstart, ystart):
 
-    for xdir, ydir in [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]:
-        x, y = xstart, ystart
-        x += xdir
-        y += ydir
-        Score = 0
-        while isOnBoard(x, y) and board[x][y] == tile:
-            Score += 1
-            x += xdir
-            y += ydir
-            if Score == 4:
-                return True
+
 def one(board, tile, xstart, ystart):
     if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):
         return False
@@ -189,6 +195,8 @@ def one(board, tile, xstart, ystart):
                 if board[x][y] == ' ':
                     return True
     return False
+
+
 def TWOIf(board, tile, xstart, ystart):
     if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):
         return False
@@ -209,9 +217,11 @@ def TWOIf(board, tile, xstart, ystart):
                 if Score == 2 and board[x][y] == ' ':
                     return True
     return False
+
+
 """
         这里判定组成第一层的条件   
-        
+
         这里判定组成第一层的条件 
         tileNumber = 0
         space = 0
@@ -228,6 +238,8 @@ def TWOIf(board, tile, xstart, ystart):
             elif space > 1:
                 break
         """
+
+
 def chess(board, tile, xstart, ystart):
     if tile == 'X':
         theTile = 'O'
@@ -256,7 +268,6 @@ def chess(board, tile, xstart, ystart):
                     if isOnBoard(x, y) and board[x][y] == tile:
                         tileNumber += 1
                         if isOnBoard(x + xdir, y + ydir) and tileNumber == 2 and board[x + xdir][y + ydir] == ' ':
-
                             MaxSpace += 1
             if isOnBoard(x, y) and board[x][y] == tile:
                 x += xdir
@@ -282,8 +293,6 @@ def chess(board, tile, xstart, ystart):
             x, y = xstart, ystart
             x += xdir
             y += ydir
-            if isOnBoard(x, y) and board[x][y] == tile and board[x + xdir][y + ydir] == ' ':
-                MaxSpace += 1
             if isOnBoard(x, y) and board[x][y] == ' ':
                 x += xdir
                 y += ydir
@@ -294,6 +303,7 @@ def chess(board, tile, xstart, ystart):
         return True
 
     return False
+
 
 def chessWin(board, tile, xstart, ystart):
     if tile == 'X':
@@ -306,7 +316,7 @@ def chessWin(board, tile, xstart, ystart):
     for xdir, ydir in [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]:
         MaxSocre = 0
         x, y = xstart, ystart
-        #只要两方向条件都成立，则为棋阵。
+        # 只要两方向条件都成立，则为棋阵。
         x -= xdir
         y -= ydir
         while isOnBoard(x, y) and board[x][y] == tile:
@@ -325,6 +335,8 @@ def chessWin(board, tile, xstart, ystart):
             return True
 
     return False
+
+
 def CHESS(board, tile, xstart, ystart):
     TScore = 0
     if tile == 'X':
@@ -343,7 +355,7 @@ def CHESS(board, tile, xstart, ystart):
             x, y = xstart, ystart
             x += xdir
             y += ydir
-                # 这里就可开始判定了
+            # 这里就可开始判定了
             while isOnBoard(x, y) and board[x][y] == tile:
                 Score += 1
                 x += xdir
@@ -353,7 +365,9 @@ def CHESS(board, tile, xstart, ystart):
                     return True
 
     return False
-#创建一个列表存储可以下的棋型
+
+
+# 创建一个列表存储可以下的棋型
 def winchess(board, tile):
     win = []
     tileSome = []
@@ -363,23 +377,26 @@ def winchess(board, tile):
                 win.append([x, y])
             if chess(board, tile, x, y):
                 tileSome.append([x, y])
-    return win,tileSome
+    return win, tileSome
+
+
 def winchesss(board, tile):
     One = []
     Two = []
     ONE = []
-    first = []
     for x in range(WIDTH):
         for y in range(HEIGHT):
-            if OneIf2(board,tile,x, y):
-                ONE.append([x, y])
-            if oneIF(board,tile,x, y):
-                One.append([x, y])
-            if TWOIf(board,tile,x, y):
+            if OneIf2(board, tile, x, y):
                 Two.append([x, y])
-            if one(board,tile,x, y):
-                first.append([x, y])
-    return One,Two,ONE,first
+            if oneIF(board, tile, x, y):
+                One.append([x, y])
+            if TWOIf(board, tile, x, y):
+                Two.append([x, y])
+            if one(board, tile, x, y):
+                ONE.append([x, y])
+    return One, Two, ONE
+
+
 def allspace(board):
     space = []
     for x in range(WIDTH):
@@ -389,27 +406,25 @@ def allspace(board):
     return space
 
 
-
 def center(board):
     Center = []
-    for i in range(7,12):
-        for j in range(7,12):
+    for i in range(7, 12):
+        for j in range(7, 12):
             if board[i][j] == ' ':
                 Center.append([i, j])
     return Center
 
-def ComputerMove(board,tile):
+
+def ComputerMove(board, tile):
     if tile == 'X':
         thetile = 'O'
     else:
         thetile = 'X'
     Win, tileSome = winchess(board, tile)
-    One, Two, ONE, first= winchesss(board, tile)
-    playWin, playtileSome = winchess(board,thetile)
-    centerr = center(board)
-    playOne, playTwo, playONE, playfirst= winchesss(board, thetile)
-    #赢
-
+    One, Two, ONE = winchesss(board, tile)
+    playWin, playtileSome = winchess(board, thetile)
+    playOne, playTwo, playONE = winchesss(board, thetile)
+    # 赢
     if len(Win) != 0:
         random.shuffle(Win)
         return Win[0]
@@ -417,12 +432,11 @@ def ComputerMove(board,tile):
         if len(playWin) != 0:
             random.shuffle(playWin)
             return playWin[0]
-    #三个
-
+    # 三个
     if len(One) != 0:
         random.shuffle(One)
         return One[0]
-    #阵型
+    # 阵型
     if len(playOne) != 0:
         random.shuffle(playOne)
         return playOne[0]
@@ -430,6 +444,7 @@ def ComputerMove(board,tile):
         if len(tileSome) != 0:
             random.shuffle(tileSome)
             return tileSome[0]
+
     if len(Two) != 0:
         random.shuffle(Two)
         return Two[0]
@@ -440,28 +455,28 @@ def ComputerMove(board,tile):
     if len(ONE) != 0:
         random.shuffle(ONE)
         return ONE[0]
-    if len(first) != 0:
-        random.shuffle(first)
-        return first[0]
-    if len(centerr) != 0:
-        random.shuffle(centerr)
-        return centerr[0]
-#如果对面没有One  则阵型
-def play(board,play):
+    if len(center(board)) != 0:
+        random.shuffle(center(board))
+        return center(board)[0]
+
+
+# 如果对面没有One  则阵型
+def play:
     if allspace(board) != []:
         move = getplaymove(board, play)
 
-def playGame(play,computer):
-    who = whoGhostFirst() # 谁先动
+
+def playGame(play, computer):
+    who = whoGhostFirst()  # 谁先动
     board = newBoard()
     for i in board:
         print(i)
     while True:
-        #缺一层判定，判断是否能赢，判定是否全图没有空格
+        # 缺一层判定，判断是否能赢，判定是否全图没有空格
         if who == 'play':
             if allspace(board) != []:
                 drawBoard(board)
-                move = getplaymove(board,play)
+                move = getplaymove(board, play)
                 if move == 'quit':
                     print('Thanks for playing!')
                     sys.exit()
@@ -480,7 +495,7 @@ def playGame(play,computer):
 if __name__ == '__main__':
 
     play, computer = enterXY()
-    print(play,computer)
+    print(play, computer)
     while True:
         RunGame = playGame(play, computer)
         scores = getScore()
